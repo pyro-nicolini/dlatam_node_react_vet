@@ -1,0 +1,28 @@
+# Node.js
+**/node_modules/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite / React
+frontend/dist/
+frontend/.env
+frontend/.vite/
+
+# Express / Backend
+backend/.env
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+*.orig

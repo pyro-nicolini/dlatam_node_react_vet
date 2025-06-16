@@ -75,11 +75,13 @@ PRACTICA-PROYECTO/
 Puedes usar archivos `.env` para configurar:
 
 #### En `frontend/.env`:
+
 ```env
 VITE_API_URL=http://localhost:3000
 ```
 
 #### En `backend/.env`:
+
 ```env
 PORT=3000
 ```
@@ -100,4 +102,4 @@ nodemon index.js
 
 ### ✨ Autor
 
-Hecho con 💻 por [TuNombreAquí]
+Hecho con 💻 por [Piero Nicolini]

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [mensaje, setMensaje] = useState("");
-  const [lista, setLista] = useState([]);
+  const [citas, setCitas] = useState([]);
   const [registro, setRegistro] = useState({
     id: "",
     nombre: "",
@@ -13,9 +13,9 @@ function App() {
     color: "",
     enfermedad: "",
   });
-  
-  let url = "/lista";
-  
+
+  let url = "/citas";
+
   const { id, nombre, edad, tipo, color, enfermedad } = registro;
 
   useEffect(() => {
@@ -28,21 +28,93 @@ function App() {
   const getData = () => {
     axios
       .get("http://localhost:3000" + url)
-      .then((res) => setLista(res.data))
+      .then((res) => setCitas(res.data))
       .catch((err) => console.log(err));
   };
+  function eliminarCita(i, id) {
+    axios.delete("http://localhost:3000" + url + "/" + id).then(() => {
+      alert("Eliminando a " + citas[i].nombre + " del registro " + citas[i].id);
+      getData();
+    });
+  }
 
+  /* */
 
+  function prepararCita(i, id) {
+    const cita = citas[i];
+    setRegistro({
+      id: cita.id,
+      nombre: cita.nombre,
+      edad: cita.edad,
+      tipo: cita.tipo,
+      color: cita.color,
+      enfermedad: cita.enfermedad,
+    });
+  }
+
+  function editarCita(id) {
+    // Validación: todos los campos deben estar llenos
+    const camposVacios = Object.values(registro).some(
+      (v) => v === "" || v === null
+    );
+    if (camposVacios) {
+      alert(
+        "❌ Por favor completa todos los campos antes de agregar una cita."
+      );
+      return;
+    }
+    axios
+      .put("http://localhost:3000/citas/" + id, registro)
+      .then(() => {
+        getData();
+        setRegistro({
+          id: "",
+          nombre: "",
+          edad: "",
+          tipo: "",
+          color: "",
+          enfermedad: "",
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  /*
+   */
 
   useEffect(() => {
     getData();
   }, []);
 
   function handleChange(e) {
-    setRegistro({ ...registro, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    let nuevoRegistro = {
+      ...registro,
+      [name]: name === "id" || name === "edad" ? Number(value) : value,
+    };
+
+    if (name === "id") {
+      const citaExistente = citas.find((c) => c.id === Number(value));
+      if (citaExistente) {
+        nuevoRegistro = { ...citaExistente };
+      }
+    }
+
+    setRegistro(nuevoRegistro);
   }
 
   function nuevaCita() {
+    // Validación: todos los campos deben estar llenos
+    const camposVacios = Object.values(registro).some(
+      (v) => v === "" || v === null
+    );
+    if (camposVacios) {
+      alert(
+        "❌ Por favor completa todos los campos antes de agregar una cita."
+      );
+      return;
+    }
     axios.post("http://localhost:3000" + url, registro).then(() => {
       getData();
       setRegistro({
@@ -58,32 +130,38 @@ function App() {
 
   return (
     <>
+      <h1>{mensaje}</h1>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "1rem",
+          gap: ".5rem",
           width: "100%",
         }}
       >
-        {["id", "nombre", "edad", "tipo", "color", "enfermedad"].map(
-          (nombreDelIndice) => (
-            <label key={nombreDelIndice} htmlFor={nombreDelIndice}>
-              {nombreDelIndice}:
-              <input
-                type="text"
-                name={nombreDelIndice}
-                placeholder={nombreDelIndice}
-                value={registro[nombreDelIndice]}
-                onChange={handleChange}
-              />
-            </label>
-          )
+        <div>
+          {["id", "nombre", "edad", "tipo", "color", "enfermedad"].map(
+            (nombreDelIndice) => (
+              <label key={nombreDelIndice} htmlFor={nombreDelIndice}>
+                {nombreDelIndice}:
+                <input
+                  type="text"
+                  name={nombreDelIndice}
+                  placeholder={nombreDelIndice}
+                  value={registro[nombreDelIndice]}
+                  onChange={handleChange}
+                />
+              </label>
+            )
+          )}
+        </div>
+        {citas.some((c) => c.id == registro.id) ? (
+          <button onClick={() => editarCita(registro.id)}>
+            Guardar Cambios
+          </button>
+        ) : (
+          <button onClick={nuevaCita}>Agregar</button>
         )}
-
-        <button type="submit" onClick={nuevaCita}>
-          Agregar
-        </button>
       </div>
 
       <div
@@ -94,8 +172,7 @@ function App() {
           alignItems: "center",
         }}
       >
-        <h1>{mensaje}</h1>
-        <h2>Lista de pacientes</h2>
+        <h2>citas de pacientes</h2>
         <table
           style={{
             background: "lightblue",
@@ -118,7 +195,7 @@ function App() {
           <tbody id="cuerpo"></tbody>
 
           <tbody>
-            {lista.map((cita) => (
+            {citas.map((cita, i) => (
               <tr key={cita.id}>
                 <th scope="row">{cita.id}</th>
                 <td>{cita.nombre}</td>
@@ -126,6 +203,12 @@ function App() {
                 <td>{cita.tipo}</td>
                 <td>{cita.color}</td>
                 <td>{cita.enfermedad}</td>
+                <td>
+                  <button onClick={() => prepararCita(i, cita.id)}>
+                    editar
+                  </button>
+                  <button onClick={() => eliminarCita(i, cita.id)}>x</button>
+                </td>
               </tr>
             ))}
           </tbody>

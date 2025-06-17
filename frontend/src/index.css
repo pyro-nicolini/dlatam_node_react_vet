@@ -42,6 +42,7 @@ h1 {
 input {
   background-color: #747bff;
   color: black !important;
+  max-width: 8rem;
 }
 
 button {

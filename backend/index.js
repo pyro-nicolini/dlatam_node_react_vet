@@ -71,16 +71,6 @@ app.get("/citas", (req, res) => {
   res.send(citas);
 });
 
-// app.post("/citas", (req, res) => {
-//   const nuevaCita = req.body;
-//   let data = fs.readFileSync("citas.json");
-//   citas = JSON.parse(data);
-//   citas.push(nuevaCita);
-//   fs.writeFileSync("citas.json", JSON.stringify(citas, null, 2));
-//   res.send(`Nueva cita `);
-//   console.log(`Nueva cita de ${nuevaCita.nombre}`);
-// });
-
 app.post("/citas", (req, res) => {
   let data = fs.readFileSync("citas.json", "utf8");
   citas = JSON.parse(data);

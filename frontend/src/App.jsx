@@ -16,8 +16,6 @@ function App() {
 
   let url = "/citas";
 
-  const { id, nombre, edad, tipo, color, enfermedad } = registro;
-
   useEffect(() => {
     axios
       .get("http://localhost:3000/")
@@ -131,38 +129,43 @@ function App() {
   return (
     <>
       <h1>{mensaje}</h1>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: ".5rem",
-          width: "100%",
-        }}
-      >
-        <div>
-          {["id", "nombre", "edad", "tipo", "color", "enfermedad"].map(
-            (nombreDelIndice) => (
-              <label key={nombreDelIndice} htmlFor={nombreDelIndice}>
-                {nombreDelIndice}:
-                <input
-                  type="text"
-                  name={nombreDelIndice}
-                  placeholder={nombreDelIndice}
-                  value={registro[nombreDelIndice]}
-                  onChange={handleChange}
-                />
-              </label>
-            )
+
+      <form>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: ".5rem",
+            width: "100%",
+            alignItems: "start",
+            justifyContent: "start",
+          }}
+        >
+          <div>
+            {["id", "nombre", "edad", "tipo", "color", "enfermedad"].map(
+              (nombreDelIndice) => (
+                <label key={nombreDelIndice} htmlFor={nombreDelIndice}>
+                  {nombreDelIndice}:
+                  <input
+                    type="text"
+                    name={nombreDelIndice}
+                    placeholder={nombreDelIndice}
+                    value={registro[nombreDelIndice]}
+                    onChange={handleChange}
+                  />
+                </label>
+              )
+            )}
+          </div>
+          {citas.some((c) => c.id == registro.id) ? (
+            <button onClick={() => editarCita(registro.id)}>
+              Guardar Cambios
+            </button>
+          ) : (
+            <button onClick={nuevaCita}>Agregar</button>
           )}
         </div>
-        {citas.some((c) => c.id == registro.id) ? (
-          <button onClick={() => editarCita(registro.id)}>
-            Guardar Cambios
-          </button>
-        ) : (
-          <button onClick={nuevaCita}>Agregar</button>
-        )}
-      </div>
+      </form>
 
       <div
         style={{
@@ -191,9 +194,7 @@ function App() {
               <th>Síntoma</th>
             </tr>
           </thead>
-
           <tbody id="cuerpo"></tbody>
-
           <tbody>
             {citas.map((cita, i) => (
               <tr key={cita.id}>

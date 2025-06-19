@@ -1,13 +1,5 @@
 [
   {
-    "id": 1,
-    "nombre": "Luna",
-    "edad": 3,
-    "tipo": "gata",
-    "color": "gris",
-    "enfermedad": "pulgas"
-  },
-  {
     "id": 2,
     "nombre": "Max",
     "edad": 7,
@@ -38,5 +30,45 @@
     "tipo": "gato",
     "color": "naranja",
     "enfermedad": "infección urinaria"
+  },
+  {
+    "id": 6,
+    "nombre": "Simba",
+    "edad": 4,
+    "tipo": "gato",
+    "color": "naranja",
+    "enfermedad": "infección urinaria"
+  },
+  {
+    "id": 20,
+    "nombre": "Max",
+    "edad": 7,
+    "tipo": "perro",
+    "color": "negro",
+    "enfermedad": "otitis"
+  },
+  {
+    "id": 21,
+    "nombre": "Max",
+    "edad": 7,
+    "tipo": "perro",
+    "color": "negro",
+    "enfermedad": "otitis"
+  },
+  {
+    "id": 1,
+    "nombre": "Max",
+    "edad": 7,
+    "tipo": "perro",
+    "color": "negro",
+    "enfermedad": "otitis"
+  },
+  {
+    "id": 7,
+    "nombre": "Max",
+    "edad": 7,
+    "tipo": "perro",
+    "color": "negro",
+    "enfermedad": "otitis"
   }
 ]

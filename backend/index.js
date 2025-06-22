@@ -51,9 +51,7 @@ let citas = [
   },
 ];
 
-if (!fs.existsSync("citas.json", "uft8")) {
-  fs.writeFileSync("citas.json", JSON.stringify(citas));
-}
+!fs.existsSync("citas.json", "uft8")? fs.writeFileSync("citas.json", JSON.stringify(citas)): null;
 
 const PORT = process.env.PORT || 3000;
 
@@ -101,11 +99,7 @@ app.put("/citas/:id", (req, res) => {
   citas = JSON.parse(fs.readFileSync("citas.json", "utf-8"));
 
   citas = citas.map((c) => {
-    if (c.id == id) {
-      return { ...c, ...modificacion };
-    } else {
-      return { ...c };
-    }
+    c.id == id ? { ...c, ...modificacion } : { ...c };
   });
   fs.writeFileSync("citas.json", JSON.stringify(citas, null, 2));
   res.send("actualizado con exito");

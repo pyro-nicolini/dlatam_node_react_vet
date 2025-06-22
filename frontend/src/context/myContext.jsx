@@ -16,30 +16,42 @@ export const MyProvider = ({ children }) => {
   });
 
   let url = "/citas";
-
   let id, nombre, edad, tipo, color, enfermedad;
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/")
-      .then((res) => setMensaje(res.data))
-      .catch((err) => console.log(err));
+    obtenerMensaje();
+    obtenerData();
   }, []);
 
-  const getData = () => {
-    axios
-      .get("http://localhost:3000" + url)
-      .then((res) => setCitas(res.data))
-      .catch((err) => console.log(err));
-  };
-  function eliminarCita(i, id) {
-    axios.delete("http://localhost:3000" + url + "/" + id).then(() => {
-      alert("Eliminando a " + citas[i].nombre + " del registro " + citas[i].id);
-      getData();
-    });
-  }
 
-  /* */
+  const obtenerMensaje = async ()=> {
+    try{
+      const res = await axios.get("http://localhost:3000/");
+      setMensaje(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const obtenerData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000" + url);
+      setCitas(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
+  const eliminarCita = async (i, id) => {
+    try {
+      const res = await axios.delete("http://localhost:3000" + url + "/" + id);
+      alert("Eliminando a " + citas[i].nombre + " del registro " + citas[i].id);
+      obtenerData();
+    } catch (err) {
+      console.log(err);
+    };
+  }
 
   function prepararCita(i, id) {
     const cita = citas[i];
@@ -53,7 +65,7 @@ export const MyProvider = ({ children }) => {
     });
   }
 
-  function editarCita(id) {
+  const editarCita = async (id) => {
     // Validación: todos los campos deben estar llenos
     const camposVacios = Object.values(registro).some(
       (v) => v === "" || v === null
@@ -64,11 +76,10 @@ export const MyProvider = ({ children }) => {
       );
       return;
     }
-    axios
-      .put("http://localhost:3000/citas/" + id, registro)
-      .then(() => {
-        getData();
-        setRegistro({
+    try {
+      const res = await axios.put("http://localhost:3000/citas/" + id, registro);
+      obtenerData();
+      setRegistro({
           id: "",
           nombre: "",
           edad: "",
@@ -76,29 +87,18 @@ export const MyProvider = ({ children }) => {
           color: "",
           enfermedad: "",
         });
-      })
-      .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
   }
-
-  /*
-   */
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
-
     let nuevoRegistro = {
       ...registro,
       [name]: name === "id" || name === "edad" ? Number(value) : value,
     };
-
-    if (value <= 0 || value == null) {
-      return;
-    }
-
+    if (value <= 0 || value == null) return;
     setRegistro(nuevoRegistro);
   }
 
@@ -114,7 +114,7 @@ export const MyProvider = ({ children }) => {
       return;
     }
     axios.post("http://localhost:3000" + url, registro).then(() => {
-      getData();
+      obtenerData();
       setRegistro({
         id: "",
         nombre: "",

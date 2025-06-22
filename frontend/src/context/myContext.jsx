@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-
 export const myContext = createContext();
 
 export const MyProvider = ({ children }) => {
@@ -96,11 +95,8 @@ export const MyProvider = ({ children }) => {
       [name]: name === "id" || name === "edad" ? Number(value) : value,
     };
 
-    if (name === "id") {
-      const citaExistente = citas.find((c) => c.id === Number(value));
-      if (citaExistente) {
-        nuevoRegistro = { ...citaExistente };
-      }
+    if (value <= 0 || value == null) {
+      return;
     }
 
     setRegistro(nuevoRegistro);

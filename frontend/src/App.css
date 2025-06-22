@@ -39,20 +39,26 @@ input {
   margin-bottom: .4rem;
 }
 
+#add {
+  display: block;
+  margin-top: 1rem;
+  background: linear-gradient(rgba(211, 121, 17, 0.693), rgba(102, 0, 255, 0.768));
+}
+
 button {
   background: linear-gradient(rgba(179, 23, 23, 0.467), rgba(102, 0, 255, 0.507));
   padding: .5rem 1rem;
-  margin: auto .3rem;
+  margin: auto;
   border-radius: 1.1rem;
   color: white;
   border: none;
 }
 
-button:hover {
-  background: linear-gradient(rgba(221, 20, 20, 0.827), rgba(70, 4, 169, 0.507));
+button:hover, #add:hover {
+  background: linear-gradient(rgba(87, 20, 221, 0.827), rgba(70, 4, 169, 0.507));
 }
-button:active {
-  background: linear-gradient(rgba(221, 20, 20, 0.827), rgba(0, 0, 0, 0.507));
+button:active, #add:hover {
+  background: linear-gradient(rgba(43, 6, 190, 0.827), rgba(0, 0, 0, 0.507));
 }
 
 .lista {
@@ -79,4 +85,9 @@ table {
 
 td {
   padding: .4rem;
+}
+
+
+strong {
+  padding: .5rem;
 }

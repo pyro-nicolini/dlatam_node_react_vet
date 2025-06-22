@@ -7,6 +7,7 @@ function Registro() {
   return (
     <>
       <form>
+          <strong>Ingreso paciente:</strong>
         <div>
           <div>
             {["id", "nombre", "edad", "tipo", "color", "enfermedad"].map(
@@ -25,11 +26,11 @@ function Registro() {
             )}
           </div>
           {citas.some((c) => c.id == registro.id) ? (
-            <button onClick={() => editarCita(registro.id)}>
+            <button id="add" onClick={() => editarCita(registro.id)}>
               Guardar Cambios
             </button>
           ) : (
-            <button onClick={nuevaCita}>Agregar</button>
+            <button id="add" onClick={nuevaCita}>Agregar</button>
           )}
         </div>
       </form>

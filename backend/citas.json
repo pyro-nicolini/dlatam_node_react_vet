@@ -1,8 +1,16 @@
 [
   {
+    "id": 1,
+    "nombre": "Luna",
+    "edad": 3,
+    "tipo": "gata",
+    "color": "gris",
+    "enfermedad": "pulgas"
+  },
+  {
     "id": 2,
-    "nombre": "Maxsdadsasd",
-    "edad": 72,
+    "nombre": "Max",
+    "edad": 7,
     "tipo": "perro",
     "color": "negro",
     "enfermedad": "otitis"
@@ -30,5 +38,13 @@
     "tipo": "gato",
     "color": "naranja",
     "enfermedad": "infección urinaria"
+  },
+  {
+    "id": 11,
+    "nombre": "asd",
+    "edad": 33,
+    "tipo": "asd",
+    "color": "asd",
+    "enfermedad": "asd"
   }
 ]
